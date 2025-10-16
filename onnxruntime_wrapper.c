@@ -106,6 +106,10 @@ OrtStatus *SetSessionLogSeverityLevel(OrtSessionOptions *o, int level) {
   return ort_api->SetSessionLogSeverityLevel(o, level);
 }
 
+OrtStatus *RegisterCustomOpsLibrary(OrtSessionOptions *o, char *library_path) {
+  return ort_api->RegisterCustomOpsLibrary_V2(o, (const ORTCHAR_T*) library_path);
+}
+
 OrtStatus *AddSessionConfigEntry(OrtSessionOptions *o, char *key,
     char *value) {
   return ort_api->AddSessionConfigEntry(o, key, value);

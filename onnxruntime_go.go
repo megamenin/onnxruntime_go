@@ -1336,6 +1336,19 @@ func (o *SessionOptions) SetLogSeverityLevel(level LoggingLevel) error {
 	return nil
 }
 
+// Registers a custom operators library with the current SessionOptions.
+// The provided path should point to a shared library file containing a
+// RegisterCustomOps implementation as described in the ONNX Runtime docs.
+func (o *SessionOptions) RegisterCustomOpsLibrary(path string) error {
+	cPath := C.CString(path)
+	defer C.free(unsafe.Pointer(cPath))
+	status := C.RegisterCustomOpsLibrary(o.o, cPath)
+	if status != nil {
+		return statusToError(status)
+	}
+	return nil
+}
+
 // Returns true, nil if the SessionOptions has a configuration entry with the
 // given key. Returns false if the key isn't defined. Returns an error if
 // onnxruntime indicates an error, though it isn't clear from the docs what
